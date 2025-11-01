@@ -18,17 +18,15 @@ function App() {
   };
 
   const getBalance = async () => {
-    const contract = await getEthereumContract();
-    if (!contract) return;
-
-    try {
-      // assuming your contract has a public function getBalance(address)
-      const result = await contract.getBalance(account);
-      setBalance(ethers.formatEther(result));
-    } catch (error) {
-      console.error("Error fetching balance:", error);
-    }
-  };
+  if (window.ethereum && account) {
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const balance = await provider.getBalance(account);
+    const balanceInEth = ethers.formatEther(balance);
+    alert(`Your wallet balance: ${balanceInEth} ETH`);
+  } else {
+    alert("Connect wallet first!");
+  }
+};
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white">
@@ -46,11 +44,12 @@ function App() {
           <p>Connected: {account}</p>
 
           <button
-            onClick={getBalance}
-            className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg"
-          >
-            Get My Casino Balance
-          </button>
+  onClick={getBalance}
+  className="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-lg font-semibold transition"
+>
+  Check Balance
+</button>
+
 
           {balance && <p>Your casino balance: {balance} ETH</p>}
         </div>
