@@ -1,4 +1,4 @@
-contract A address - 0x7EF2e0048f5bAeDe046f6BF797943daF4ED8CB47
+contract A address - 0x1ff2b86a5dB40632DAB47f8A775f91Bc5b40028A
 contract A ABI - [
 	{
 		"inputs": [
